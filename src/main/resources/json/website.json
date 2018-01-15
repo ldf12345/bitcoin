@@ -1,0 +1,6 @@
+[
+  {"code":"Bittrex","desc":"Bittrex","baseUrl":"https://bittrex.com/"},
+  {"code":"GATE.IO","desc":"GATE.IO","baseUrl":"http://data.gate.io/"},
+  {"code":"OKEX","desc":"OKEX","baseUrl":"https://www.okex.com/"},
+  {"code":"ZB","desc":"中币","baseUrl":"http://api.zb.com/"}
+]

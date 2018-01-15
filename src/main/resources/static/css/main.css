@@ -1,0 +1,23 @@
+h1{
+    color:#0000FF;
+}
+
+h2{
+    color:#FF0000;
+}
+body {
+    font-size:15px;
+}
+.container{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+    margin-left: 15px;
+    width:auto;
+}
+
+th{
+    text-align:center;
+    text-valign:center;
+}
+

@@ -1,0 +1,9 @@
+[
+  {"websiteCode":"Bittrex", "action":"TICKER", "actionUrlPattern":"api/v1.1/public/getticker?market=<market>-<currency>", "responseClass":"com.veronique.app.bitcoin.domain.ticker.bittrex.BittrexTicker"},
+
+  {"websiteCode":"GATE.IO", "action":"TICKER", "actionUrlPattern":"api2/1/ticker/<currency>_<market>", "responseClass":"com.veronique.app.bitcoin.domain.ticker.gate.GateTicker"},
+
+  {"websiteCode":"OKEX", "action":"TICKER", "actionUrlPattern":"api/v1/ticker.do?symbol=<currency>_<market>", "responseClass":"com.veronique.app.bitcoin.domain.ticker.okex.OkexTicker"},
+
+  {"websiteCode":"ZB", "action":"TICKER", "actionUrlPattern":"data/v1/ticker?market=<currency>_<market>", "responseClass":"com.veronique.app.bitcoin.domain.ticker.zb.ZbTicker"}
+]

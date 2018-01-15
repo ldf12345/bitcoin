@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bitcoin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css"
+          href="../webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"
+          href="../css/main.css" />
+    <meta http-equiv="refresh" content="30" />
+
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Bitcoin</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="javascript:void(0)">市场行情</a></li>
+                        <li><a href="#">币种管理</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+            <ul class="nav nav-tabs" th:each="market : ${markets}">
+                <li th:class="${market.code eq currentMarket} ? 'active'">
+                    <a th:href="@{/bitcoin/ticker(market=${market.code})}" th:text="${market.code} + 交易区"></a>
+                </li>
+            </ul>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th th:rowspan="2">币种</th>
+                    <th th:colspan="3" th:each="website : ${websites}" th:text="${website.code}"></th>
+                </tr>
+                <tr>
+                    <div th:each="website : ${websites}">
+                        <th>最新</th>
+                        <th>买入</th>
+                        <th>卖出</th>
+                    </div>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tickerGroup : ${tickerGroups}">
+                    <td th:text="${tickerGroup.currency}"></td>
+                    <div th:each="ticker : ${tickerGroup.tickers}">
+                        <td>
+                            <span th:style="'width:40px;text-align:left;display:inline-block;'" th:text="${ticker.last?.amount}"></span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span th:if="${ticker.last?.perchange?.length() gt 0}" >
+                                [<span th:style="${ticker.last?.level eq 2} ? 'color:red' : (${ticker.last?.level eq 1} ? 'color:blue' : (${ticker.last?.level eq -1} ? 'color:green'))" th:text="${ticker.last.perchange} + '%'"></span>]
+                            </span>
+                        </td>
+                        <td class="success">
+                            <span th:style="'width:50px;text-align:left;display:inline-block;'" th:text="${ticker.buy?.amount}"></span>
+                        </td>
+                        <td  class="warning">
+                            <span th:style="'width:50px;text-align:left;display:inline-block;'" th:text="${ticker.sell?.amount}"></span>
+                        </td>
+                    </div>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+
+<script type="text/javascript" src="../webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>

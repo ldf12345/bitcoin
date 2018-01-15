@@ -1,0 +1,19 @@
+[
+  {"code":"BCC", "desc":"BCH/比特现金"},
+  {"code":"BTC", "desc":"比特币"},
+  {"code":"BTS", "desc":"比特股"},
+  {"code":"ETC", "desc":"以太经典"},
+  {"code":"ETH", "desc":"以太坊"},
+  {"code":"IFC", "desc":"无限币"},
+  {"code":"LTC", "desc":"莱特币"},
+  {"code":"XRP", "desc":"瑞波币"},
+  {"code":"DOGE", "desc":"狗狗币"},
+  {"code":"NXT", "desc":"未来币"},
+  {"code":"MTC", "desc":"猴宝币"},
+  {"code":"OMG", "desc":"OMG"},
+  {"code":"HSR", "desc":"红烧肉"},
+  {"code":"QTUM", "desc":"量子币"},
+  {"code":"EOS", "desc":"EOS"},
+  {"code":"BNT", "desc":"BNT"},
+  {"code":"DASH", "desc":"达世币"}
+]
