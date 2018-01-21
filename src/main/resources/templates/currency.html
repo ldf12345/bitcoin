@@ -19,7 +19,7 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="/bitcoin/ticker?market=usdt">市场行情</a></li>
+                        <li><a href="/bitcoin/ticker?market=usdt" th:target="_blank">市场行情</a></li>
                         <li class="active"><a href="javascript:void(0)">币种管理</a></li>
                     </ul>
                 </div>
@@ -30,10 +30,10 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th width="10%">币种CODE(<span style="color:red">*</span>)</th>
-                    <th width="10%">币种描述</th>
-                    <th width="10%" th:each="website : ${websites}" th:text="${website.desc}"></th>
-                    <th width="10%">操作</th>
+                    <th>币种CODE(<span style="color:red">*</span>)</th>
+                    <th>币种描述</th>
+                    <th th:each="website : ${websites}" th:text="${website.desc}"></th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
