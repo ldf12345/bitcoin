@@ -1,5 +1,9 @@
 [
-  {"code":"BCC", "desc":"BCH/比特现金"},
+  {"code":"WICC", "desc":"WICC"},
+  {"code":"SHOW", "desc":"SHOW"},
+  {"code":"KCASH", "desc":"KCASH"},
+  {"code":"UGC", "desc":"UGC"},
+  {"code":"TRUE", "desc":"TRUE"},
   {"code":"BTC", "desc":"比特币"},
   {"code":"BTS", "desc":"比特股"},
   {"code":"ETC", "desc":"以太经典"},
