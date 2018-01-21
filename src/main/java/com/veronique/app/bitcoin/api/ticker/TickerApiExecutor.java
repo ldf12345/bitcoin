@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 public class TickerApiExecutor extends ApiExecutor {
 
     public <T extends BaseTicker> Ticker execute(TickerRequest<T> request) {
-
         Ticker ticker = null;
         if (request == null) {
             ticker = new Ticker();
@@ -36,8 +35,5 @@ public class TickerApiExecutor extends ApiExecutor {
 
         return ticker;
     }
-
-
-
 
 }

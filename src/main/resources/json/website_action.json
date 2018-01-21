@@ -5,5 +5,7 @@
 
   {"websiteCode":"OKEX", "action":"TICKER", "actionUrlPattern":"api/v1/ticker.do?symbol=<currency>_<market>", "responseClass":"com.veronique.app.bitcoin.domain.ticker.okex.OkexTicker"},
 
+  {"websiteCode":"BINANCE", "action":"TICKER", "actionUrlPattern":"api/v1/ticker/24hr?symbol=<currency><market>", "responseClass":"com.veronique.app.bitcoin.domain.ticker.binance.BinanceTicker"},
+
   {"websiteCode":"ZB", "action":"TICKER", "actionUrlPattern":"data/v1/ticker?market=<currency>_<market>", "responseClass":"com.veronique.app.bitcoin.domain.ticker.zb.ZbTicker"}
 ]

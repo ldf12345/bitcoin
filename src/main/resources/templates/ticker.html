@@ -35,7 +35,7 @@
                 <thead>
                 <tr>
                     <th th:rowspan="2">币种</th>
-                    <th th:colspan="3" th:each="website : ${websites}" th:text="${website.code}"></th>
+                    <th th:colspan="3" th:each="website : ${websites}" th:text="${website.desc}"></th>
                 </tr>
                 <tr>
                     <div th:each="website : ${websites}">

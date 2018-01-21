@@ -29,8 +29,8 @@ public class TickerRequest<T> {
 
     public String getUrl() {
         StringBuilder sb = new StringBuilder(baseUrl);
-        actionUrl = StringUtils.replace(actionUrl, "<currency>", StringUtils.lowerCase(currency));
-        actionUrl = StringUtils.replace(actionUrl, "<market>", StringUtils.lowerCase(market));
+        actionUrl = StringUtils.replace(actionUrl, "<currency>", StringUtils.upperCase(currency));
+        actionUrl = StringUtils.replace(actionUrl, "<market>", StringUtils.upperCase(market));
         sb.append(actionUrl);
         return sb.toString();
     }
