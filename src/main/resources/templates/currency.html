@@ -38,19 +38,25 @@
                 </thead>
                 <tbody>
                 <tr th:each="currencyGroup : ${currencyGroups}">
-                    <td th:text="${currencyGroup.currency?.code}"></td>
-                    <input name="code" type="hidden" th:value="${currencyGroup.currency?.code}"/>
+                    <div th:if="${currencyGroup.currency.code == null}" >
+                        <td><input name="code" type="text" th:value="${currencyGroup.currency?.code}"/></td>
+                    </div>
+                    <div th:if="${currencyGroup.currency.code != null}" >
+                        <td th:text="${currencyGroup.currency?.code}"></td>
+                        <input name="code" type="hidden" th:value="${currencyGroup.currency?.code}"/>
+                    </div>
+
                     <td><input name="desc" type="text" class="form-control" th:value="${currencyGroup.currency?.desc}" /></td>
                     <div th:each="websiteCurrency : ${currencyGroup.websiteCurrencies}">
                         <td>
                             <input name="websiteCode" type="hidden" th:value="${websiteCurrency.websiteCode}" />
-                            <input name="customCurrency" type="text" class="form-control" th:value="${websiteCurrency.customCurrency}" />
+                            <input name="customCurrency" type="text" class="form-control" th:value="${websiteCurrency.customCurrency}"/>
                         </td>
                     </div>
                     <td style="text-align:center">
                         <button class="btn btn-success save">保存</button>
                         &nbsp;&nbsp;
-                        <button class="btn btn-warning delete">删除</button>
+                        <button class="btn btn-danger delete" th:disabled="${currencyGroup.currency.code == null}">删除</button>
                     </td>
                 </tr>
                 </tbody>
@@ -72,11 +78,12 @@
                 contentType:'application/json;charset=utf-8',
                 type:"post",
                 error:function(data){
-                    alert("出错了！我也不知道是什么错！");
+                    alert("又出错了！我也不知道是什么错！");
                 },
                 success:function(data){
                     if (!data.success) {
-                        alert("有出错了！" + data.msg);
+                        alert("又出错了！" + data.msg);
+                        window.location.reload();
                     } else {
                         window.location.reload();
                     }
@@ -98,7 +105,8 @@
                 },
                 success:function(data){
                     if (!data.success) {
-                        alert("有出错了！" + data.msg);
+                        alert("出错了！" + data.msg);
+                        window.location.reload();
                     } else {
                         window.location.reload();
                     }

@@ -26,18 +26,15 @@ public class CurrencyService extends BaseService {
     }
 
     public void save(CurrencyDO newCurrencyDO) {
-        boolean newCurrency = true;
         newCurrencyDO.setCode(newCurrencyDO.getCode().toUpperCase());
-        for (CurrencyDO currencyDO : list) {
+        Iterator<CurrencyDO> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            CurrencyDO currencyDO = iterator.next();
             if (StringUtils.equalsIgnoreCase(newCurrencyDO.getCode(), currencyDO.getCode())) {
-                currencyDO.setDesc(newCurrencyDO.getDesc());
-                newCurrency = false;
+                iterator.remove();
             }
         }
-
-        if (newCurrency) {
-            list.add(0, newCurrencyDO);
-        }
+        list.add(0, newCurrencyDO);
 
         FileUtils.writeFile(FILE_NAME, JSON.toJSONString(list, true));
     }
@@ -53,8 +50,9 @@ public class CurrencyService extends BaseService {
             if (StringUtils.equalsIgnoreCase(newCurrencyDO.getCode(), currencyDO.getCode())) {
                 iterator.remove();
             }
-
         }
+
+        FileUtils.writeFile(FILE_NAME, JSON.toJSONString(list, true));
     }
 
     @Override
