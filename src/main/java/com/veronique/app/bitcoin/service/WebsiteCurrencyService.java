@@ -1,6 +1,14 @@
 package com.veronique.app.bitcoin.service;
 
+import com.veronique.app.bitcoin.domain.CurrencyDO;
+import com.veronique.app.bitcoin.domain.CurrencyGroupDO;
 import com.veronique.app.bitcoin.domain.WebsiteCurrencyDO;
+import com.veronique.app.bitcoin.domain.WebsiteDO;
+import com.veronique.app.bitcoin.domain.ticker.TickerGroup;
+import com.veronique.app.bitcoin.dto.CurrencyRequestDTO;
+import com.veronique.app.bitcoin.dto.CurrencyResponseDTO;
+import com.veronique.app.bitcoin.dto.TickerRequestDTO;
+import com.veronique.app.bitcoin.dto.TickerResponseDTO;
 import com.veronique.app.bitcoin.utils.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -9,6 +17,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @Service
 public class WebsiteCurrencyService extends BaseService {
@@ -43,6 +54,25 @@ public class WebsiteCurrencyService extends BaseService {
             currencyDO.setCurrencyCode(currencyCode);
         }
         return currencyDO;
+    }
+
+    public CurrencyResponseDTO geCurrencyGroups(CurrencyRequestDTO requestDTO) {
+        List<CurrencyGroupDO> groups = new ArrayList<>(requestDTO.getCurrencyList().size());
+        try {
+            for (CurrencyDO currencyDO : requestDTO.getCurrencyList()) {
+                CurrencyGroupDO groupDO = new CurrencyGroupDO();
+                groupDO.setCurrency(currencyDO);
+                for (WebsiteDO websiteDO : requestDTO.getWebsiteList()) {
+                    groupDO.getWebsiteCurrencies().add(getByCode(websiteDO.getCode(), currencyDO.getCode()));
+                }
+                groups.add(groupDO);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return new CurrencyResponseDTO(groups);
     }
 
     @Override

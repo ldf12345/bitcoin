@@ -21,4 +21,8 @@ public class CurrencyDO extends BaseDO {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    public String getDisplayName() {
+        return this.getCode() + "(" + this.getDesc() + ")";
+    }
 }

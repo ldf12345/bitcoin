@@ -7,29 +7,18 @@ import com.veronique.app.bitcoin.domain.WebsiteDO;
 
 import java.util.List;
 
-public class TickerRequestDTO extends BaseDO {
-
-    private MarketDO marketDO;
+public class CurrencyRequestDTO extends BaseDO {
 
     private List<CurrencyDO> currencyList;
 
     private List<WebsiteDO> websiteList;
 
-    public TickerRequestDTO() {
+    public CurrencyRequestDTO() {
     }
 
-    public TickerRequestDTO(MarketDO marketDO,  List<CurrencyDO> currencyList, List<WebsiteDO> websiteList) {
-        this.marketDO = marketDO;
+    public CurrencyRequestDTO(List<CurrencyDO> currencyList, List<WebsiteDO> websiteList) {
         this.currencyList = currencyList;
         this.websiteList = websiteList;
-    }
-
-    public MarketDO getMarketDO() {
-        return marketDO;
-    }
-
-    public void setMarketDO(MarketDO marketDO) {
-        this.marketDO = marketDO;
     }
 
     public List<CurrencyDO> getCurrencyList() {

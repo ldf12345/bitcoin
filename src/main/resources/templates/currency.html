@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bitcoin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css"
+          href="../webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"
+          href="../css/main.css" />
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Bitcoin</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/bitcoin/ticker?market=usdt">市场行情</a></li>
+                        <li class="active"><a href="javascript:void(0)">币种管理</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>币种</th>
+                    <th th:each="website : ${websites}" th:text="${website.code}"></th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="currencyGroup : ${currencyGroups}">
+                    <td th:text="${currencyGroup.currency.displayName}"></td>
+                    <div th:each="websiteCurrency : ${currencyGroup.websiteCurrencies}">
+                        <td>
+                            <span th:text="${websiteCurrency.customCurrency}"></span>
+                        </td>
+                    </div>
+                    <td>删除</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+
+<script type="text/javascript" src="../webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>

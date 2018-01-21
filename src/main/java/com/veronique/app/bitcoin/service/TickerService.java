@@ -26,9 +26,6 @@ public class TickerService {
     private TickerApiExecutor executor;
 
     @Resource
-    private CurrencyService currencyService;
-
-    @Resource
     private WebsiteActionService websiteActionService;
 
     @Resource
@@ -36,13 +33,12 @@ public class TickerService {
 
     public TickerResponseDTO getTickerGroupsAsync(TickerRequestDTO requestDTO) {
         Long start = System.currentTimeMillis();
-        List<CurrencyDO> currencyList = currencyService.getList();
-        ExecutorService executorService = Executors.newFixedThreadPool(currencyList.size());
-        List<TickerGroup> groups = new ArrayList<>(currencyList.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(requestDTO.getCurrencyList().size());
+        List<TickerGroup> groups = new ArrayList<>(requestDTO.getCurrencyList().size());
         List<Future<TickerGroup>> futureList = new ArrayList<Future<TickerGroup>>();
         try {
 
-            for (CurrencyDO currencyDO : currencyList) {
+            for (CurrencyDO currencyDO : requestDTO.getCurrencyList()) {
                 futureList.add(executorService.submit(new CallableTask(requestDTO.getMarketDO(), currencyDO, requestDTO.getWebsiteList())));
             }
 
@@ -95,7 +91,7 @@ public class TickerService {
 
     public TickerGroup getTickerGroup(MarketDO marketDO, CurrencyDO currencyDO, List<WebsiteDO> websiteList) {
         TickerGroup tickerGroup = new TickerGroup();
-        tickerGroup.setCurrency(currencyDO.getCode() + "(" + currencyDO.getDesc() + ")");
+        tickerGroup.setCurrency(currencyDO);
         try {
             Ticker standardTicker = null;
             for (WebsiteDO websiteDO : websiteList) {
