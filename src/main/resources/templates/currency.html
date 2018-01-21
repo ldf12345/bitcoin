@@ -3,12 +3,10 @@
 <head>
     <title>Bitcoin</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-    <link rel="stylesheet" type="text/css"
-          href="../webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-
-    <link rel="stylesheet" th:href="@{/css/main.css}"
-          href="../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css" />
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -32,20 +30,28 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>币种</th>
-                    <th th:each="website : ${websites}" th:text="${website.code}"></th>
-                    <th>操作</th>
+                    <th width="10%">币种CODE(<span style="color:red">*</span>)</th>
+                    <th width="15%">币种描述</th>
+                    <th width="15%" th:each="website : ${websites}" th:text="${website.code}"></th>
+                    <th width="15%">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="currencyGroup : ${currencyGroups}">
-                    <td th:text="${currencyGroup.currency.displayName}"></td>
+                    <td th:text="${currencyGroup.currency?.code}"></td>
+                    <input name="code" type="hidden" th:value="${currencyGroup.currency?.code}"/>
+                    <td><input name="desc" type="text" class="form-control" th:value="${currencyGroup.currency?.desc}" /></td>
                     <div th:each="websiteCurrency : ${currencyGroup.websiteCurrencies}">
                         <td>
-                            <span th:text="${websiteCurrency.customCurrency}"></span>
+                            <input name="websiteCode" type="hidden" th:value="${websiteCurrency.websiteCode}" />
+                            <input name="customCurrency" type="text" class="form-control" th:value="${websiteCurrency.customCurrency}" />
                         </td>
                     </div>
-                    <td>删除</td>
+                    <td style="text-align:center">
+                        <button class="btn btn-success save">保存</button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-warning delete">删除</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -53,8 +59,81 @@
     </div>
 </div>
 <!-- /.container -->
+<script>
+    $(function() {
+        $(".save").click(function(){
 
-<script type="text/javascript" src="../webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            var currencyGroup = createCurrencyGroup($(this));
+
+            $.ajax({
+                url:"/bitcoin/currency/save",
+                data:JSON.stringify(currencyGroup),
+//                dataType:"json",
+                contentType:'application/json;charset=utf-8',
+                type:"post",
+                error:function(data){
+                    alert("出错了！我也不知道是什么错！");
+                },
+                success:function(data){
+                    if (!data.success) {
+                        alert("有出错了！" + data.msg);
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            })
+        });
+
+        $(".delete").click(function(){
+            var currencyGroup = createCurrencyGroup($(this));
+
+            $.ajax({
+                url:"/bitcoin/currency/delete",
+                data:JSON.stringify(currencyGroup),
+//                dataType:"json",
+                contentType:'application/json;charset=utf-8',
+                type:"post",
+                error:function(data){
+                    alert("出错了！我也不知道是什么错！");
+                },
+                success:function(data){
+                    if (!data.success) {
+                        alert("有出错了！" + data.msg);
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            })
+        });
+
+        function createCurrencyGroup(button) {
+            var currencyGroup = new Object();
+            currencyGroup.currency = new Object();
+            currencyGroup.websiteCurrencies = new Array();
+            button.parent().parent().find("input").each(function(i,input){
+                if (input.name == "code") {
+                    currencyGroup.currency.code = input.value;
+                }
+
+                if (input.name == "desc") {
+                    currencyGroup.currency.desc = input.value;
+                }
+
+                var j = parseInt(i/2) - 1;
+                if (input.name == "websiteCode") {
+                    currencyGroup.websiteCurrencies[j] = new Object();
+                    currencyGroup.websiteCurrencies[j].websiteCode = input.value;
+                }
+
+                if (input.name == "customCurrency") {
+                    currencyGroup.websiteCurrencies[j].customCurrency = input.value;
+                }
+            });
+            alert(JSON.stringify(currencyGroup));
+            return currencyGroup;
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.veronique.app.bitcoin.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class CurrencyDO extends BaseDO {
 
     private String code;
@@ -22,6 +24,7 @@ public class CurrencyDO extends BaseDO {
         this.desc = desc;
     }
 
+    @JSONField(serialize = false)
     public String getDisplayName() {
         return this.getCode() + "(" + this.getDesc() + ")";
     }

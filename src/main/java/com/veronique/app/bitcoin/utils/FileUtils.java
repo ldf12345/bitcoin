@@ -76,4 +76,29 @@ public class FileUtils {
         return null;
     }
 
+
+    public static void writeFile(String fileName, String data) {
+        String reStr = "";
+        File file = new File(JSON_DATA_DIR + fileName);
+        OutputStreamWriter writer;
+        BufferedWriter bw = null;
+        try {
+            writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+            bw = new BufferedWriter(writer);
+            bw.write(data);
+            bw.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

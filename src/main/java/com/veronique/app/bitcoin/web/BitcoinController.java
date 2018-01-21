@@ -1,15 +1,20 @@
 package com.veronique.app.bitcoin.web;
 
+import com.veronique.app.bitcoin.domain.CurrencyDO;
+import com.veronique.app.bitcoin.domain.CurrencyGroupDO;
 import com.veronique.app.bitcoin.domain.MarketDO;
 import com.veronique.app.bitcoin.domain.WebsiteDO;
 import com.veronique.app.bitcoin.dto.CurrencyRequestDTO;
 import com.veronique.app.bitcoin.dto.CurrencyResponseDTO;
 import com.veronique.app.bitcoin.dto.TickerRequestDTO;
 import com.veronique.app.bitcoin.dto.TickerResponseDTO;
+import com.veronique.app.bitcoin.dto.ajax.AjaxResponseDTO;
 import com.veronique.app.bitcoin.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,7 +37,7 @@ public class BitcoinController {
     private CurrencyService currencyService;
 
     @Resource
-    private WebsiteCurrencyService websiteCurrencyServicee;
+    private WebsiteCurrencyService websiteCurrencyService;
 
 
     @RequestMapping("ticker")
@@ -67,9 +72,9 @@ public class BitcoinController {
             List<WebsiteDO> websites = websiteService.getList();
             model.put("websites", websites);
 
-            CurrencyRequestDTO requestDTO = new CurrencyRequestDTO(currencyService.getList(), websites);
-            CurrencyResponseDTO responseDTO = websiteCurrencyServicee.geCurrencyGroups(requestDTO);
-
+            List<CurrencyDO> currencyList = currencyService.getList();
+            CurrencyRequestDTO requestDTO = new CurrencyRequestDTO(currencyList, websites);
+            CurrencyResponseDTO responseDTO = websiteCurrencyService.geCurrencyGroups(requestDTO);
             model.put("currencyGroups", responseDTO.getCurrencyGroupList());
 
         } catch (Exception e) {
@@ -77,6 +82,41 @@ public class BitcoinController {
         }
 
         return "currency";
+    }
+
+    @RequestMapping(value = "currency/save")
+    public @ResponseBody AjaxResponseDTO saveCurrency(@RequestBody CurrencyGroupDO currencyGroupDO) {
+        AjaxResponseDTO responseDTO = new AjaxResponseDTO();
+        try {
+            if (currencyGroupDO.getCurrency() == null || StringUtils.isBlank(currencyGroupDO.getCurrency().getCode())) {
+                responseDTO.setMsg("请输入币种信息");
+                return responseDTO;
+            }
+            currencyService.save(currencyGroupDO.getCurrency());
+            websiteCurrencyService.save(currencyGroupDO);
+            responseDTO.setSuccess(true);
+        } catch (Exception e ) {
+            responseDTO.setMsg("怎么就出现错误了呢");
+        }
+
+        return responseDTO;
+    }
+
+
+    @RequestMapping(value = "currency/delete")
+    public @ResponseBody AjaxResponseDTO deleteCurrency(@RequestBody CurrencyGroupDO currencyGroupDO) {
+        AjaxResponseDTO responseDTO = new AjaxResponseDTO();
+        try {
+            if (currencyGroupDO.getCurrency() == null || StringUtils.isBlank(currencyGroupDO.getCurrency().getCode())) {
+                responseDTO.setMsg("请输入币种信息");
+                return responseDTO;
+            }
+            currencyService.delete(currencyGroupDO.getCurrency());
+            responseDTO.setSuccess(true);
+        } catch (Exception e ) {
+            responseDTO.setMsg("怎么就出现错误了呢");
+        }
+        return responseDTO;
     }
 
 }

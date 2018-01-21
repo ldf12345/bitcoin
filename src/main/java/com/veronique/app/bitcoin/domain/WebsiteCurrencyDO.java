@@ -1,5 +1,6 @@
 package com.veronique.app.bitcoin.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.apache.commons.lang3.StringUtils;
 
 public class WebsiteCurrencyDO extends BaseDO {
@@ -34,6 +35,7 @@ public class WebsiteCurrencyDO extends BaseDO {
         this.customCurrency = customCurrency;
     }
 
+    @JSONField(serialize = false)
     public String getRealCurrency() {
         return StringUtils.isNotBlank(customCurrency) ?  customCurrency : currencyCode;
     }
